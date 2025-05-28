@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PTO Tracker</title>
+</head>
+<body>
+    <h1>PTO Tracker</h1>
+    <a href="/logout">Logout</a>
+    <h2>Add Employee</h2>
+    <form method="POST" action="/add">
+        Name: <input type="text" name="name" required>
+        Hire Date: <input type="date" name="hire_date" required>
+        <input type="submit" value="Add">
+    </form>
+    <h2>Employees</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th><th>Hire Date</th><th>PTO Used</th><th>PTO Balance</th><th>Sick Used</th><th>Sick Balance</th><th>Update</th>
+        </tr>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.hire_date }}</td>
+            <td>{{ emp.pto_used }}</td>
+            <td>{{ emp.pto_balance }}</td>
+            <td>{{ emp.sick_used }}</td>
+            <td>{{ emp.sick_balance }}</td>
+            <td>
+                <form method="POST" action="/update/{{ emp.id }}">
+                    PTO Used: <input type="number" step="0.01" name="pto_used" value="{{ emp.pto_used }}">
+                    Sick Used: <input type="number" step="0.01" name="sick_used" value="{{ emp.sick_used }}">
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
